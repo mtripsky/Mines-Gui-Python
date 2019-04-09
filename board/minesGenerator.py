@@ -1,10 +1,12 @@
 import numpy as np
+import random
 from helpers.coordinate import Coordinate
 
 class MinesGenerator():
     """docstring for MinesGenerator."""
-    def __init__(self):
-        self.size =  1
 
     def generate(self, size, count):
-        result = np.array([(Coordinate(x, y) for x in range(size)) for y in range(size)])
+        result = list([Coordinate(x, y) for x in range(size) for y in range(size)])
+        random.shuffle(result)
+
+        return result[0:count]
