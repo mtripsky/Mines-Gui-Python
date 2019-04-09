@@ -1,0 +1,10 @@
+import numpy as np
+from helpers.coordinate import Coordinate
+
+class MinesGenerator():
+    """docstring for MinesGenerator."""
+    def __init__(self):
+        self.size =  1
+
+    def generate(self, size, count):
+        result = np.array([(Coordinate(x, y) for x in range(size)) for y in range(size)])
