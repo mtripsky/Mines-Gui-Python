@@ -1,11 +1,18 @@
 from board.state import State
 from board.minesGenerator import MinesGenerator
+from board.boardInitializer import BoardInitializer
+from board.boardUpdater import BoardUpdater
+from game.boardWidget import BoardWidget
+from tkinter import *
 
-state = State(3)
-#state.print()
+state = State(10, 10)
+updater = BoardUpdater(state)
+generator = MinesGenerator()
+initializer = BoardInitializer(state, generator, updater)
+initializer.initiate()
 
-gen = MinesGenerator()
-lis = gen.generate(3, 2)
-
-for l in lis:
-    print(f'{l.X}, {l.Y}')
+root = Tk()
+frame = Frame(root, width=600, height=600)
+frame.pack()
+b = BoardWidget(state, frame)
+root.mainloop()
