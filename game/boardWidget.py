@@ -1,7 +1,7 @@
 from helpers.boardReferee import BoardReferee
 from helpers.coordinate import Coordinate
 import numpy as np
-from tkinter import Button, PhotoImage
+from tkinter import *
 
 
 class BoardWidget():
@@ -9,11 +9,20 @@ class BoardWidget():
 
     neighborCoordinates = [[-1, 0], [0, -1], [1, 0], [0, 1]]
 
-    def __init__(self, state, frame):
+    def __init__(self, state, master, width, height):
         super().__init__()
         self._state = state
         self._markedMinesCounter = 0
-        self._frame = frame
+        self._master = master
+        self._frameTop = Frame(master, width=width, height=50)
+        self._frameTop.pack(side=TOP)
+        self._frame = Frame(master, width=width, height=height)
+        self._frame.pack()
+        self._label = Label(
+            self._frameTop,
+            text=f'{self._markedMinesCounter}/{self._state.getMinesCount()}',
+            fg='red')
+        self._label.pack()
         self.mineMarkerImg = PhotoImage(file="game/img/markMine.gif")
         self.mineImg = PhotoImage(file="game/img/mine.gif")
         self.cellOrigImg = PhotoImage(file="game/img/cellOrig.gif")
@@ -42,7 +51,8 @@ class BoardWidget():
         if (cell.isMine):
             self._buttons[coord.X, coord.Y].config(image=self.mineImg,
                                                    width=20)
-            print("Game OVER")
+            self._label.config(text=f'GAME OVER!!!!!!')
+
         elif (cell.neighborMinesCount == 0):
             neighbors = [
                 Coordinate(coord.X + x, coord.Y + y)
@@ -74,13 +84,14 @@ class BoardWidget():
         cell.clickCounter += 1
 
         if (cell.clickCounter % 2 != 0):
-            # cell.isRevealed = True
             self._markedMinesCounter += 1
             self._buttons[coord.X, coord.Y].config(image=self.mineMarkerImg,
                                                    width=20)
         else:
-            # cell.isRevealed = False
             self._markedMinesCounter -= 1
             self._buttons[coord.X, coord.Y].config(image=self.cellOrigImg,
                                                    width=20)
+
+        self._label.config(
+            text=f'{self._markedMinesCounter}/{self._state.getMinesCount()}')
         self.redraw()
