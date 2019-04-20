@@ -1,2 +1,1 @@
-pip install unittest2
-pip install mock
+unittest2, mock
