@@ -1,4 +1,4 @@
-import unittest2 as unittest
+import unittest as unittest
 from board.boardUpdater import BoardUpdater
 from board.state import State
 from board.cell import Cell

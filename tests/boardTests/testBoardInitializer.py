@@ -1,4 +1,4 @@
-import unittest2 as unittest
+import unittest as unittest
 from unittest.mock import MagicMock
 from board.boardInitializer import BoardInitializer
 from board.boardUpdater import BoardUpdater
